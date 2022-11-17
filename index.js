@@ -1,9 +1,14 @@
-import express from "express";
-import bodyParser from "body-parser";
-import sequelize from "sequelize";
-import cors from "cors";
-import nodemailer from "nodemailer"
-import dotenv from "dotenv"
+const express=require("express");
+const bodyParser =require( "body-parser");
+const  Sequelize =require("sequelize");
+const cors =require("cors");
+const nodemailer =require ("nodemailer")
+const dotenv =require ("dotenv");
+
+//db conn
+require("./database/connection");
+
+require("./bootstrap")();
 
 dotenv.config();
 const router = express.Router();
