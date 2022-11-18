@@ -1,35 +1,14 @@
-<<<<<<< HEAD
-const express=require("express");
-const bodyParser =require( "body-parser");
-const  Sequelize =require("sequelize");
-const cors =require("cors");
-const nodemailer =require ("nodemailer")
-const dotenv =require ("dotenv");
-const jwt=require("jsonwebtoken");
-=======
 const express = require('express')
 const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const cors = require('cors')
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
->>>>>>> f91ec3523bd97724dc639f11db695b00899f0b5c
 
 //db conn
 require('./database/connection')
 
-<<<<<<< HEAD
-require("./bootstrap")();
-const User=require("./models/user");
-const Sponsor=require("./models/sponsors");
-
-const errHandler= (err)=>{
-    console.error("Error: ",err);
-}
-
-=======
 require('./bootstrap')()
->>>>>>> f91ec3523bd97724dc639f11db695b00899f0b5c
 
 dotenv.config()
 const router = express.Router()
@@ -81,7 +60,6 @@ router.post('/contact', (req, res) => {
     } else {
       res.json({ status: 'Mesaj trimis cu succes' })
     }
-<<<<<<< HEAD
   });
 });
 
@@ -125,7 +103,5 @@ app.post("/api/register", async (req, res) => {
     res.json({status: "error", err: err});
   }
 });
-=======
-  })
-})
->>>>>>> f91ec3523bd97724dc639f11db695b00899f0b5c
+
+
