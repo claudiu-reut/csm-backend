@@ -8,7 +8,10 @@ const dotenv = require('dotenv')
 //db conn
 require('./database/connection')
 
-require('./bootstrap')()
+require('./bootstrap')();
+const User=require("./models/user");
+const Sponsor=require("./models/sponsors");
+
 
 dotenv.config()
 const router = express.Router()
