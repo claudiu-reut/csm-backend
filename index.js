@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const cors = require('cors')
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
+const jwt = require('jsonwebtoken')
 
 //db conn
 require('./database/connection')
@@ -11,7 +12,9 @@ require('./database/connection')
 require('./bootstrap')();
 const User=require("./models/user");
 const Sponsor=require("./models/sponsors");
-
+const errHandler= (err)=>{
+  console.error("Error: ",err);
+}
 
 dotenv.config()
 const router = express.Router()
@@ -19,7 +22,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/', router)
-app.listen(5000, () => console.log('Server Running'))
+app.listen(5000, () => console.log('Server Running on port 5000'))
 const contactEmail = nodemailer.createTransport({
   host: 'smtp-mail.outlook.com', // hostname
   secureConnection: false, // TLS requires secureConnection to be false
@@ -68,7 +71,7 @@ router.post('/contact', (req, res) => {
 
 
 //login endpoint
-app.post("/api/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   console.log(req.body.email);
   console.log(req.body.password);
   const user = await User.findOne({where:{
@@ -83,14 +86,14 @@ app.post("/api/login", async (req, res) => {
       },
       "secret123"
     );
-    return res.json({status: "ok", user: token});
+    return res.status(200).json({status: "ok", token: token, role: user.role});
   } else {
-    return res.json({status: "error", user: false});
+    return res.status(401).json({status: "error", token: false});
   }
 });
 
 //register endpoint
-app.post("/api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     console.log(req.body);
     const user = await User.create({
