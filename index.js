@@ -104,9 +104,9 @@ app.post("/register", async (req, res) => {
       role: req.body.role,
     });
 
-    res.json({status: "ok"});
+    res.status(200).json({status: "ok"});
   } catch (err) {
-    res.json({status: "error", err: err});
+    res.status(400).json({status: "error", err: err});
   }
 });
 
