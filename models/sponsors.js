@@ -16,5 +16,9 @@ const  Sequelize =require("sequelize");
       editia: {
         type: Sequelize.STRING(40),
         allowNull:false
-      }
+      },
+      linkImagine:{
+        type: Sequelize.STRING(500),
+        allowNull:false
+      },
  });

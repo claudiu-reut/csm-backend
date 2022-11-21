@@ -22,8 +22,13 @@ module.exports = {
     editia: {
       type: Sequelize.STRING(40),
       allowNull:false
-    }
-    
+    },
+    linkImagine:{
+      type: Sequelize.STRING(500),
+      allowNull:false
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
    })
   },
 
