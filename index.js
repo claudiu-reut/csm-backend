@@ -12,6 +12,9 @@ require('./database/connection')
 require('./bootstrap')();
 const User=require("./models/user");
 const Sponsor=require("./models/sponsors");
+const Post=require("./models/post");
+User.hasMany(Post,{as:"posts", foreignKey:"user_id"});
+Post.belongsTo(User);
 const errHandler= (err)=>{
   console.error("Error: ",err);
 }
@@ -69,7 +72,7 @@ router.post('/contact', (req, res) => {
   });
 });
 
-
+///USERI
 //login endpoint
 app.post("/login", async (req, res) => {
   console.log(req.body.email);
@@ -109,7 +112,22 @@ app.post("/register", async (req, res) => {
     res.status(400).json({status: "error", err: err});
   }
 });
+//delete user endpoint
+app.post("/deleteuser/:id", async (req, res) => {
+  try {
+    const id=req.params.id;
+    const temp=User.destroy({
+      where:{id_user:id}
+    })
+    
 
+    res.status(200).json({status: "ok"});
+  } catch (err) {
+    res.status(400).json({status: "error", err: err});
+  }
+});
+
+///SPONSORI
 //create sponsors endpoint
 app.post("/createsponsor", async (req, res) => {
   try {
@@ -137,3 +155,22 @@ res.status(200).json(sponsors);
     res.status(400).json({status: "error", err: err});
   }
 })
+
+//deletesponsor
+app.post("/deletesponsor/:id",async (req, res) => {
+
+  try{
+   
+    
+  const id=req.params.id;
+ const  temp=Sponsor.destroy({
+  where: {id_sponsor:id},
+ })
+ res.status(200).json({status: "ok"});
+
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+
+

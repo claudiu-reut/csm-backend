@@ -21,4 +21,6 @@ const  Sequelize =require("sequelize");
         type: Sequelize.STRING(500),
         allowNull:false
       },
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
  });
