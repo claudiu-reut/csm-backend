@@ -17,7 +17,7 @@ module.exports = {
       allowNull:false
     },
     linkSite: {
-      type: Sequelize.STRING(40),
+      type: Sequelize.STRING(500),
     },
     editia: {
       type: Sequelize.STRING(40),
