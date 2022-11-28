@@ -113,7 +113,7 @@ app.post("/register", async (req, res) => {
   }
 });
 //delete user endpoint
-app.post("/deleteuser/:id", async (req, res) => {
+app.delete("/deleteuser/:id", async (req, res) => {
   try {
     const id=req.params.id;
     const temp=User.destroy({
@@ -126,6 +126,48 @@ app.post("/deleteuser/:id", async (req, res) => {
     res.status(400).json({status: "error", err: err});
   }
 });
+
+//get all users
+app.get("/getusers",async (req, res) => {
+
+  try{
+  const users= await User.findAll();
+  res.status(200).json(users);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+//get user by id
+app.get("/getuser/:id",async (req, res) => {
+
+  try{
+  const users= await User.findByPk(req.params.id);
+  res.status(200).json(users);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+//edit user
+app.put("/edituser/:id", async (req, res) => {
+console.log(req.body);
+console.log(req.params.id);
+  try{
+  const users= await User.update({
+    firstName: req.body.firstName,
+    lastName:req.body.lastName,
+    email:req.body.email,
+    password:req.body.password,
+    role:req.body.role
+  },
+  {
+    where:{id_user:req.params.id}
+  })
+  res.status(200).json({status: "ok"});
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+
 
 ///SPONSORI
 //create sponsors endpoint
@@ -157,7 +199,7 @@ res.status(200).json(sponsors);
 })
 
 //deletesponsor
-app.post("/deletesponsor/:id",async (req, res) => {
+app.delete("/deletesponsor/:id",async (req, res) => {
 
   try{
    
@@ -172,5 +214,34 @@ app.post("/deletesponsor/:id",async (req, res) => {
       res.status(400).json({status: "error", err: err});
     }
   })
+//get sponsor by id
+app.get("/getsponsor/:id",async (req, res) => {
 
+  try{
+  const sponsor= await Sponsor.findByPk(req.params.id);
+  res.status(200).json(sponsor);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+
+  //update sponsor by id
+  app.put("/editsponsor/:id", async (req, res) => {
+    console.log(req.body);
+    console.log(req.params.id);
+      try{
+      const sponsors= await Sponsor.update({
+       denumire: req.body.denumire,
+        linkSite:req.body.linkSite,
+        editia:req.body.editia,
+        linkImagine:req.body.linkImagine,
+      },
+      {
+        where:{id_sponsor:req.params.id}
+      })
+      res.status(200).json({status: "ok"});
+      }catch (err) {
+          res.status(400).json({status: "error", err: err});
+        }
+      })
 
