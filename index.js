@@ -86,6 +86,7 @@ app.post("/login", async (req, res) => {
       {
         email: user.email,
         role: user.role,
+        name:user.firstName,
       },
       "secret123"
     );
