@@ -1,5 +1,5 @@
 const  Sequelize =require("sequelize");
- module.exports = sequelize.define("User",{
+ module.exports = sequelize.define("Post",{
     id_postare: {
         type: Sequelize.INTEGER(8),
         autoIncrement: true,
@@ -7,7 +7,7 @@ const  Sequelize =require("sequelize");
         allowNull:false
       },
       titlu: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(200),
         allowNull:false
       },
       descriere: {
@@ -17,12 +17,12 @@ const  Sequelize =require("sequelize");
       tags: {
         type: Sequelize.STRING(80),
       },
-      data: {
-        type: Sequelize.DATE,
-        allowNull:false
-      },
+  
       linkExtern:{
         type: Sequelize.STRING(500),
+      },
+      linkImg:{
+        type: Sequelize.STRING(500)
       },
      user_id:{
         type: Sequelize.INTEGER(3),

@@ -11,7 +11,7 @@ module.exports = {
       allowNull:false
     },
     titlu: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING(200),
       allowNull:false
     },
     descriere: {
@@ -21,10 +21,6 @@ module.exports = {
     tags: {
       type: Sequelize.STRING(80),
     },
-    data: {
-      type: Sequelize.DATE,
-      allowNull:false
-    },
     linkExtern:{
       type: Sequelize.STRING(500),
     },
@@ -32,6 +28,9 @@ module.exports = {
       type: Sequelize.INTEGER(3),
       allowNull:false,
    },
+   linkImg:{
+    type: Sequelize.STRING(500)
+  },
    createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
    })

@@ -14,7 +14,7 @@ const User=require("./models/user");
 const Sponsor=require("./models/sponsors");
 const Post=require("./models/post");
 User.hasMany(Post,{as:"posts", foreignKey:"user_id"});
-Post.belongsTo(User);
+Post.belongsTo(User,{as:"posts", foreignKey:"user_id"});
 const errHandler= (err)=>{
   console.error("Error: ",err);
 }
@@ -246,3 +246,35 @@ app.get("/getsponsor/:id",async (req, res) => {
         }
       })
 
+
+    ///add post endpoint
+    app.post("/addpost", async (req, res) => {
+      try {
+        console.log(req.body);
+        const post = await Post.create({
+         titlu:req.body.titlu,
+         descriere:req.body.descriere,
+         tags:req.body.tags,
+         data:req.body.data,
+         linkExtern:req.body.linkExtern,
+         linkImg:req.body.linkImg,
+         user_id:req.body.user_id
+        });
+    
+        res.status(200).json({status: "ok"});
+      } catch (err) {
+        res.status(400).json({status: "error", err: err});
+      }
+    });
+
+
+///get posts endpoint
+app.get("/getposts",async (req, res) => {
+
+  try{
+  const posts= await Post.findAll();
+  res.status(200).json(posts);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
