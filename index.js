@@ -351,7 +351,7 @@ app.delete("/deletepost/:id",async (req, res) => {
 //add team endpoint
 app.post("/addteam",upload.single("imagine"), async (req, res) => {
   try {
-    console.log(req.file);
+    console.log(req.file.buffer.toString("base64"));
     const team = await Team.create({
     tara:req.body.tara,
     oras: req.body.oras,
