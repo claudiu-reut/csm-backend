@@ -12,7 +12,8 @@ module.exports = {
     },
     titlu: {
       type: Sequelize.STRING(200),
-      allowNull:false
+      allowNull:false,
+      unique: true
     },
     descriere: {
       type: Sequelize.STRING(5000),

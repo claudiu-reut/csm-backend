@@ -5,21 +5,31 @@ const cors = require('cors')
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken')
-
+const multer = require('multer')
 //db conn
 require('./database/connection')
+
+const upload = multer({storage:multer.memoryStorage()})
 
 require('./bootstrap')();
 const User=require("./models/user");
 const Sponsor=require("./models/sponsors");
 const Post=require("./models/post");
 const sequelize = require('./database/connection')
+const Team = require('./models/team')
+const Match = require("./models/match")
+const Personal = require("./models/personal")
 User.hasMany(Post,{as:"posts", foreignKey:"user_id"});
 Post.belongsTo(User,{as:"posts", foreignKey:"user_id"});
 const errHandler= (err)=>{
   console.error("Error: ",err);
 }
-
+Team.hasMany(Match,{as:"matches1", foreignKey:"id_echipa1"})
+Team.hasMany(Match,{as:"matches2", foreignKey:"id_echipa2"})
+Match.belongsTo(Post,{as:"matches1", foreignKey:"id_echipa1"})
+Match.belongsTo(Post,{as:"matches2", foreignKey:"id_echipa2"})
+Team.hasMany(Personal,{as:"personal", foreignKey:"id_echipa"})
+Personal.belongsTo(Team,{as:"personal", foreignKey:"id_echipa"})
 dotenv.config()
 const router = express.Router()
 const app = express()
@@ -337,3 +347,43 @@ app.delete("/deletepost/:id",async (req, res) => {
           res.status(400).json({status: "error", err: err});
         }
       })
+
+//add team endpoint
+app.post("/addteam",upload.single("imagine"), async (req, res) => {
+  try {
+    console.log(req.file);
+    const team = await Team.create({
+    tara:req.body.tara,
+    oras: req.body.oras,
+    nume: req.body.nume,
+    imagine:req.file,
+    
+    });
+
+    res.status(200).json({status: "ok"});
+  } catch (err) {
+    res.status(400).json({status: "error", err: err});
+  }
+});
+
+//get teams endpoint
+app.get("/getteams",async (req, res) => {
+
+  try{
+  const teams= await Team.findAll();
+  res.status(200).json(teams);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+///get team by id
+app.get("/getteam/:id",async (req, res) => {
+
+  try{
+  const team= await Team.findByPk(req.params.id);
+  res.status(200).json(team);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+
