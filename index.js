@@ -88,7 +88,7 @@ app.post("/login", async (req, res) => {
         email: user.email,
         role: user.role,
         name:user.firstName,
-        id_user:user.id_user
+        user_id:user.id_user
       },
       "secret123"
     );
