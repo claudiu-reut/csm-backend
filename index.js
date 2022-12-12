@@ -13,6 +13,7 @@ require('./bootstrap')();
 const User=require("./models/user");
 const Sponsor=require("./models/sponsors");
 const Post=require("./models/post");
+const sequelize = require('./database/connection')
 User.hasMany(Post,{as:"posts", foreignKey:"user_id"});
 Post.belongsTo(User,{as:"posts", foreignKey:"user_id"});
 const errHandler= (err)=>{
@@ -274,6 +275,17 @@ app.get("/getposts",async (req, res) => {
   try{
   const posts= await Post.findAll();
   res.status(200).json(posts);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+/// get posts with email
+app.get("/getpostsuser",async (req, res) => {
+
+  try{
+  const posts= await sequelize.query('SELECT id_postare, titlu, tags, user_id, linkImg, email, firstName, lastName, p.createdAt FROM POSTS P, USERS U WHERE U.ID_USER=P.USER_ID')
+  console.log(posts);
+  res.status(200).json(posts[0]);
   }catch (err) {
       res.status(400).json({status: "error", err: err});
     }
