@@ -88,6 +88,7 @@ app.post("/login", async (req, res) => {
         email: user.email,
         role: user.role,
         name:user.firstName,
+        id_user:user.id_user
       },
       "secret123"
     );
@@ -283,9 +284,23 @@ app.get("/getposts",async (req, res) => {
 app.get("/getpostsuser",async (req, res) => {
 
   try{
-  const posts= await sequelize.query('SELECT id_postare, titlu, tags, user_id, linkImg, email, firstName, lastName, p.createdAt FROM POSTS P, USERS U WHERE U.ID_USER=P.USER_ID')
-  console.log(posts);
+  const posts= await sequelize.query('SELECT id_postare, titlu, tags, user_id, linkImg, email, firstName, lastName, p.createdAt FROM POSTS P, USERS U WHERE U.ID_USER=P.USER_ID');
   res.status(200).json(posts[0]);
+  }catch (err) {
+      res.status(400).json({status: "error", err: err});
+    }
+  })
+///delete post by id
+app.delete("/deletepost/:id",async (req, res) => {
+
+  try{
+    
+  const id=req.params.id;
+ const  temp=Post.destroy({
+  where: {id_postare:id},
+ })
+ res.status(200).json({status: "ok"});
+
   }catch (err) {
       res.status(400).json({status: "error", err: err});
     }
