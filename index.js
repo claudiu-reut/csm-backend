@@ -356,7 +356,7 @@ app.post("/addteam",upload.single("imagine"), async (req, res) => {
     tara:req.body.tara,
     oras: req.body.oras,
     nume: req.body.nume,
-    imagine:req.file,
+    imagine:req.file.buffer.toString('base64'),
     
     });
 
