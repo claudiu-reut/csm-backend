@@ -24,9 +24,9 @@ Post.belongsTo(User,{as:"posts", foreignKey:"user_id"});
 const errHandler= (err)=>{
   console.error("Error: ",err);
 }
-Team.hasMany(Match,{as:"matches1", foreignKey:"firstTeam"})
+Team.hasMany(Match,{as:"matches1", foreignKey:"id_echipa1"})
 Team.hasMany(Match,{as:"matches2", foreignKey:"id_echipa2"})
-Match.belongsTo(Post,{as:"matches1", foreignKey:"firstTeam"})
+Match.belongsTo(Post,{as:"matches1", foreignKey:"id_echipa1"})
 Match.belongsTo(Post,{as:"matches2", foreignKey:"id_echipa2"})
 Team.hasMany(Personal,{as:"personal", foreignKey:"id_echipa"})
 Personal.belongsTo(Team,{as:"personal", foreignKey:"id_echipa"})
@@ -393,15 +393,15 @@ app.get("/getteam/:id",async (req, res) => {
     try {
       console.log(req.body);
       const post = await Match.create({
-       date:req.body.date,
-       campionship:req.body.campionship,
-       score:req.body.score,
-       firstTeam:req.body.firstTeam,
-       secondTeam:req.body.secondTeam,
-       location:req.body.location,
+       data:req.body.data,
+       campionat:req.body.campionat,
+       rezultat:req.body.rezultat,
+       id_echipa1:req.body.id_echipa1,
+       id_echipa2:req.body.id_echipa2,
+       locatia:req.body.locatia,
        description:req.body.description,
-       gender:req.body.gender,
-       division:req.body.division
+       gen:req.body.gen,
+       divizia:req.body.divizia
       });
   
       res.status(200).json({status: "ok"});
@@ -424,8 +424,8 @@ app.get("/getteam/:id",async (req, res) => {
 app.get("/getmatchlogos",async (req, res) => {
 
   try{
-  const matches= await sequelize.query('SELECT id,date, campionship, location, gender, description, score, t1.nume nume1, t1.imagine img1, t2.nume nume2, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.firstTeam=t1.id_echipa and m.secondTeam=t2.id_echipa');
-  res.status(200).json(matches[0]);
+  const matches= await sequelize.query('SELECT id_meci,data, campionat, locatia, gen, description, rezultat, t1.nume, t1.imagine img1, t2.nume, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa');
+  res.status(200).json(matches);
   }catch (err) {
       console.log(err);
       res.status(400).json({status: "error", err: err});
