@@ -390,6 +390,7 @@ app.post('/addmatch', async (req, res) => {
       description: req.body.description,
       gen: req.body.gen,
       divizia: req.body.divizia,
+      sets: req.body.sets,
     })
 
     res.status(200).json({ status: 'ok' })
