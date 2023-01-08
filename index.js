@@ -409,6 +409,7 @@ app.get('/getmatches', async (req, res) => {
 
 //get matches with teams logos
 app.get('/getmatchlogos', async (req, res) => {
+  console.log('getmatches')
   try {
     const matches = await sequelize.query(
       'SELECT id_meci,data, campionat,divizia,sets, locatia, gen, description, rezultat, t1.nume nume1, t1.imagine img1, t2.nume nume2, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa'
