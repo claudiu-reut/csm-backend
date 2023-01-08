@@ -26,6 +26,16 @@ const  Sequelize =require("sequelize");
       locatia:{
         type: Sequelize.STRING(200)
       },
+      description:{
+        type: Sequelize.STRING(2000)
+      },
+      gen:{
+        type:Sequelize.STRING(30),
+        validate:{isIn:[["masculin","feminin"]]}
+      },
+      divizia:{
+        type: Sequelize.STRING(500)
+      },
       createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
  });
