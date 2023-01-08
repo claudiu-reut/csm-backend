@@ -5,40 +5,43 @@ module.exports = {
   async up (queryInterface, Sequelize) {
    
       await queryInterface.createTable('matches', {  
-        id_meci: {
+        id: {
         type: Sequelize.INTEGER(5),
         autoIncrement: true,
         primaryKey: true,
         allowNull:false
       },
-      data: {
+      date: {
         type: Sequelize.DATE,
         allowNull:false
       },
-      campionat: {
+      campionship: {
         type: Sequelize.STRING(100),
         allowNull:false
       },
-      rezultat: {
+      score: {
         type: Sequelize.STRING(100),
       },
-      id_echipa1:{
+      firstTeam:{
         type: Sequelize.INTEGER(4)
       },
-      id_echipa2:{
+      secondTeam:{
         type: Sequelize.INTEGER(4)
       },
-      locatia:{
+      location:{
         type: Sequelize.STRING(200)
       },
       description:{
         type: Sequelize.STRING(2000)
       },
-      gen:{
+      gender:{
         type:Sequelize.STRING(30),
         validate:{isIn:[["masculin","feminin"]]}
       },
-      divizia:{
+      division:{
+        type: Sequelize.STRING(500)
+      },
+      sets:{
         type: Sequelize.STRING(500)
       },
       createdAt: Sequelize.DATE,
