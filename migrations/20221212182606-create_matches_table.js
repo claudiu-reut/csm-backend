@@ -36,7 +36,7 @@ module.exports = {
       },
       gender:{
         type:Sequelize.STRING(30),
-        validate:{isIn:[["masculin","feminin"]]}
+        validate:{isIn:[["Masculin","Feminin"]]}
       },
       division:{
         type: Sequelize.STRING(500)
