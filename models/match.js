@@ -1,43 +1,43 @@
 const  Sequelize =require("sequelize");
  module.exports = sequelize.define("Matches",{
-    id: {
+    id_meci: {
         type: Sequelize.INTEGER(5),
         autoIncrement: true,
         primaryKey: true,
         allowNull:false
       },
-      date: {
+      data: {
         type: Sequelize.DATE,
         allowNull:false
       },
-      campionship: {
+      campionat: {
         type: Sequelize.STRING(100),
         allowNull:false
       },
-      score: {
+      rezultat: {
         type: Sequelize.STRING(100),
       },
-      firstTeam:{
+      id_echipa1:{
         type: Sequelize.INTEGER(4)
       },
-      secondTeam:{
+      id_echipa2:{
         type: Sequelize.INTEGER(4)
       },
-      location:{
+      locatia:{
         type: Sequelize.STRING(200)
       },
       description:{
         type: Sequelize.STRING(2000)
       },
-      gender:{
+      gen:{
         type:Sequelize.STRING(30),
         validate:{isIn:[["masculin","feminin"]]}
       },
-      division:{
-        type: Sequelize.STRING(500)
-      },
       sets:{
-        type: Sequelize.STRING(500)
+        type:Sequelize.STRING(200)
+      },
+      divizia:{
+        type:Sequelize.STRING(500)
       },
       createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE

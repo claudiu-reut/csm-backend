@@ -424,8 +424,8 @@ app.get("/getteam/:id",async (req, res) => {
 app.get("/getmatchlogos",async (req, res) => {
 
   try{
-  const matches= await sequelize.query('SELECT id_meci,data, campionat, locatia, gen, description, rezultat, t1.nume, t1.imagine img1, t2.nume, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa');
-  res.status(200).json(matches);
+  const matches= await sequelize.query('SELECT id_meci,data, campionat, locatia, gen, description, rezultat,divizia, t1.nume nume1, t1.imagine img1, t2.nume nume2, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa');
+  res.status(200).json(matches[0]);
   }catch (err) {
       console.log(err);
       res.status(400).json({status: "error", err: err});
