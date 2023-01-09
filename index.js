@@ -413,11 +413,20 @@ app.get('/getmatchlogos', async (req, res) => {
   console.log('getmatches')
   try {
     const matches = await sequelize.query(
-      'SELECT id_meci,data, campionat,divizia,sets, locatia, gen, description, rezultat, t1.nume nume1, t1.imagine img1, t2.nume nume2, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa'
+      'SELECT id_meci,data, campionat,divizia,sets, locatia, gen, description, rezultat, id_echipa1,id_echipa2, t1.nume nume1, t1.imagine img1, t2.nume nume2, t2.imagine img2 FROM csm_suceava.teams t1, csm_suceava.teams t2, csm_suceava.matches m WHERE m.id_echipa1=t1.id_echipa and m.id_echipa2=t2.id_echipa'
     )
     res.status(200).json(matches[0])
   } catch (err) {
     console.log(err)
+    res.status(400).json({ status: 'error', err: err })
+  }
+})
+app.get('/getteamlogo/:id', async (req, res) => {
+  try {
+    const logo = await Team.findByPk(req.params.id)
+    res.status(200).json(logo.imagine.toString("ascii"))
+    
+  } catch (err) {
     res.status(400).json({ status: 'error', err: err })
   }
 })
