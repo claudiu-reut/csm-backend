@@ -31,7 +31,7 @@ const  Sequelize =require("sequelize");
       },
       gen:{
         type:Sequelize.STRING(30),
-        validate:{isIn:[["masculin","feminin"]]}
+        validate:{isIn:[["Masculin","Feminin"]]}
       },
       sets:{
         type:Sequelize.STRING(200)

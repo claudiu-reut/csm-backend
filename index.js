@@ -343,7 +343,8 @@ app.put('/editpost/:id', async (req, res) => {
 //add team endpoint
 app.post('/addteam', upload.single('imagine'), async (req, res) => {
   try {
-    console.log(req.file.buffer.toString('base64'))
+    
+    
     const team = await Team.create({
       tara: req.body.tara,
       oras: req.body.oras,
@@ -353,11 +354,21 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
 
     res.status(200).json({ status: 'ok' })
   } catch (err) {
+    console.log(req.body);
     res.status(400).json({ status: 'error', err: err })
   }
 })
 
 //get teams endpoint
+app.get('/getsimpleteams', async (req, res) => {
+  try {
+    const teams = await sequelize.query("SELECT id_echipa,nume, oras, tara from csm_suceava.teams")
+    res.status(200).json(teams[0])
+  } catch (err) {
+    res.status(400).json({ status: 'error', err: err })
+  }
+})
+//get teams without logos
 app.get('/getteams', async (req, res) => {
   try {
     const teams = await Team.findAll()
@@ -395,6 +406,7 @@ app.post('/addmatch', async (req, res) => {
 
     res.status(200).json({ status: 'ok' })
   } catch (err) {
+    console.log(err);
     res.status(400).json({ status: 'error', err: err })
   }
 })
