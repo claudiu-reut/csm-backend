@@ -60,4 +60,43 @@ app.post('/addmatch', async (req, res) => {
       res.status(400).json({ status: 'error', err: err })
     }
   })
+
+  app.delete('/deletematch/:id', async (req, res) => {
+    try {
+      const id = req.params.id
+      const temp = Match.destroy({
+        where: { id_meci: id },
+      })
+      res.status(200).json({ status: 'ok' })
+    } catch (err) {
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+  app.put('/editmatch/:id', async (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
+    try {
+      const matches = await Match.update(
+        {
+            data: req.body.data,
+            campionat: req.body.campionat,
+            rezultat: req.body.rezultat,
+            id_echipa1: req.body.id_echipa1,
+            id_echipa2: req.body.id_echipa2,
+            locatia: req.body.locatia,
+            description: req.body.description,
+            gen: req.body.gen,
+            divizia: req.body.divizia,
+            sets: req.body.sets,
+        },
+        {
+          where: { id_meci: req.params.id },
+        }
+      )
+      res.status(200).json({ status: 'ok' })
+    } catch (err) {
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+
 }

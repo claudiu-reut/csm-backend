@@ -62,6 +62,55 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
       res.status(400).json({ status: 'error', err: err })
     }
   })
-  
-  
+
+  app.put('/editteam/:id',upload.single('imagine'), async (req, res) => {
+    console.log(req.file)
+    console.log(req.params.id)
+    try {
+        if(req.file){
+      const teams= await Team.update(
+        {
+          nume: req.body.nume,
+          oras: req.body.oras,
+          tara: req.body.tara,
+          imagine: req.file.buffer.toString('base64'),
+        },
+        {
+          where: { id_echipa: req.params.id },
+        }
+    
+      )
+    }else{
+        const teams= await Team.update(
+            {
+              nume: req.body.nume,
+              oras: req.body.oras,
+              tara: req.body.tara,
+            },
+            {
+              where: { id_echipa: req.params.id },
+            }
+        
+          )
+    }
+    
+      res.status(200).json({ status: 'ok' })
+    } catch (err) {
+        console.log(err);
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+
+  app.delete('/deleteteam/:id', async (req, res) => {
+    try {
+      const id = req.params.id
+      const temp = Team.destroy({
+        where: { id_echipa: id },
+      })
+      res.status(200).json({ status: 'ok' })
+    } catch (err) {
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+
 }

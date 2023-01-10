@@ -60,7 +60,7 @@ router.post('/contact', (req, res) => {
 
   const mail = {
     from: name,
-    to: 'csmsuceava@outlook.com',
+    to: process.env.EMAIL,
     subject: `Mesaj nou de la ${name}`,
     html: `<div style="font - family: system-ui; max-width:500px; margin-left">
     <h3>Ati primit un nou mesaj:</h3>
