@@ -1,5 +1,7 @@
 const  Sequelize =require("sequelize");
+
  module.exports = sequelize.define("Personal",{
+  
     id_personal: {
         type: Sequelize.INTEGER(3),
         autoIncrement: true,
@@ -38,5 +40,14 @@ const  Sequelize =require("sequelize");
         allowNull:false,
         validate:{isIn:[["jucator","antrenor"]]}
 
-      }
- });
+      },
+      imagine:{
+        type: Sequelize.BLOB('medium')
+      },
+      inaltime:{
+        type:Sequelize.STRING(10)
+      
+       },
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
+ },{freezeTableName: true});

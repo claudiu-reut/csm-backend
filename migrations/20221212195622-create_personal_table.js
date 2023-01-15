@@ -43,7 +43,20 @@ module.exports = {
         allowNull:false,
         validate:{isIn:[["jucator","antrenor"]]}
 
-      }});
+      },
+      imagine:{
+        type: Sequelize.BLOB('medium')
+      },
+      inaltime:{
+        type:Sequelize.STRING(10)
+      
+       },
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
+    
+    }
+      
+      );
     
   },
 

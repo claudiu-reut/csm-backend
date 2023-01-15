@@ -31,6 +31,7 @@ require('./routes/sponsor-routes')(app)
 require('./routes/post-routes')(app)
 require('./routes/team-routes')(app)
 require('./routes/match-routes')(app)
+require('./routes/personal-routes')(app)
 
 const contactEmail = nodemailer.createTransport({
   host: 'smtp-mail.outlook.com', // hostname
