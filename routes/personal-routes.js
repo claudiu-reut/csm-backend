@@ -39,6 +39,9 @@ module.exports=function(app){
       app.get('/getpersonal', async (req, res) => {
         try {
           const personal = await Personal.findAll()
+          personal.forEach(element => {
+            element.imagine=element.imagine.toString("ascii");
+          });
           res.status(200).json(personal)
         } catch (err) {
           res.status(400).json({ status: 'error', err: err })
