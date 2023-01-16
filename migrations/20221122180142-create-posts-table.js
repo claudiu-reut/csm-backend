@@ -32,6 +32,9 @@ module.exports = {
    linkImg:{
     type: Sequelize.STRING(500)
   },
+  imagine:{
+    type: Sequelize.BLOB('medium')
+  },
    createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
    })

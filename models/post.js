@@ -29,7 +29,9 @@ const  Sequelize =require("sequelize");
         type: Sequelize.INTEGER(3),
         allowNull:false,
      },
-    
+     imagine:{
+      type: Sequelize.BLOB('medium')
+    },
      createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
  });
