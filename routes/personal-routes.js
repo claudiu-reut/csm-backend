@@ -23,7 +23,7 @@ module.exports=function(app){
       
           res.status(200).json({ status: 'ok' })
         } catch (err) {
-          console.log(req.body);
+          console.log(err);
           res.status(400).json({ status: 'error', err: err })
         }
       })

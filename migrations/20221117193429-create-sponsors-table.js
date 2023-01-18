@@ -25,6 +25,10 @@ module.exports = {
     },
     linkImagine:{
       type: Sequelize.STRING(500),
+    
+    },
+    imagine:{
+      type: Sequelize.BLOB('medium'),
       allowNull:false
     },
     createdAt: Sequelize.DATE,

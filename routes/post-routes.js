@@ -37,6 +37,7 @@ posts.forEach(element => {
       });
       res.status(200).json(posts)
     } catch (err) {
+      console.log(err);
       res.status(400).json({ status: 'error', err: err })
     }
   })

@@ -47,6 +47,7 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
   app.get('/getteam/:id', async (req, res) => {
     try {
       const team = await Team.findByPk(req.params.id)
+      team.imagine=team.imagine.toString("ascii");
       res.status(200).json(team)
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
