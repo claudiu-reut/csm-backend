@@ -1,6 +1,8 @@
 module.exports=function(app){
     const jwt = require('jsonwebtoken')
     const User = require('../models/user')
+    const multer = require('multer')
+    const upload = multer({ storage: multer.memoryStorage() })
     const errHandler = (err) => {
         console.error('Error: ', err)
       }
@@ -30,8 +32,9 @@ module.exports=function(app){
   })
   
   //register endpoint
-  app.post('/register', async (req, res) => {
+  app.post('/register',upload.single('imagine'), async (req, res) => {
     try {
+      if(req.file){
       console.log(req.body)
       const user = await User.create({
         firstName: req.body.firstName,
@@ -39,9 +42,22 @@ module.exports=function(app){
         email: req.body.email,
         password: req.body.password,
         role: req.body.role,
+        imagine:req.file.buffer.toString('base64')
       })
   
       res.status(200).json({ status: 'ok' })
+    }
+    else
+    {
+      const user = await User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role,
+      })
+      res.status(200).json({ status: 'ok' })
+    }
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
     }
@@ -64,25 +80,51 @@ module.exports=function(app){
   app.get('/getusers', async (req, res) => {
     try {
       const users = await User.findAll()
+      users.forEach(element => {
+        if(element.imagine){
+        element.imagine=element.imagine.toString('ascii')
+      }
+      });
+      res.status(200).json(users)
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+  
+  //get user by id
+  app.get('/getuser/:id', async (req, res) => {
+    try {
+      const users = await User.findByPk(req.params.id)
+      if(users.imagine){
+      users.imagine=users.imagine.toString('ascii')}
       res.status(200).json(users)
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
     }
   })
-  //get user by id
-  app.get('/getuser/:id', async (req, res) => {
+ 
+  app.get('/getphoto/:id', async (req, res) => {
     try {
       const users = await User.findByPk(req.params.id)
-      res.status(200).json(users)
+      if(users.imagine){
+      users.imagine=users.imagine.toString('ascii')
+      res.status(200).json(users.imagine)}
+      else
+      {
+        res.status(200).json(users.imagine)
+      }
+     
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
     }
   })
   //edit user
-  app.put('/edituser/:id', async (req, res) => {
+  app.put('/edituser/:id',upload.single('imagine'), async (req, res) => {
     console.log(req.body)
     console.log(req.params.id)
     try {
+      if(req.file){
       const users = await User.update(
         {
           firstName: req.body.firstName,
@@ -90,12 +132,30 @@ module.exports=function(app){
           email: req.body.email,
           password: req.body.password,
           role: req.body.role,
+          imagine:req.file.buffer.toString('base64')
         },
         {
           where: { id_user: req.params.id },
         }
       )
       res.status(200).json({ status: 'ok' })
+      }
+      else
+      {
+        const users = await User.update(
+          {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: req.body.password,
+            role: req.body.role,
+          },
+          {
+            where: { id_user: req.params.id },
+          }
+        )
+        res.status(200).json({ status: 'ok' })
+      }
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
     }

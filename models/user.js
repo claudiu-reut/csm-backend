@@ -28,5 +28,8 @@ const  Sequelize =require("sequelize");
         type: Sequelize.STRING(40),
         allowNull:false,
         validate:{isIn:[["admin","creator"]]}
-      }
+      },
+      imagine:{
+        type: Sequelize.BLOB('medium')
+      },
  });

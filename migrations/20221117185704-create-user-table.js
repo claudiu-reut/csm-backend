@@ -33,6 +33,9 @@ module.exports = {
       allowNull:false,
       validate:{isIn:[["admin","creator"]]}
     },
+    imagine:{
+      type: Sequelize.BLOB('medium')
+    },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
     
