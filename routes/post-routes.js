@@ -45,7 +45,7 @@ posts.forEach(element => {
   app.get('/getpostsuser', async (req, res) => {
     try {
       const posts = await sequelize.query(
-        'SELECT id_postare, titlu, tags, user_id, linkImg, email, firstName, lastName, imagine ,p.createdAt FROM POSTS P, USERS U WHERE U.ID_USER=P.USER_ID'
+        'SELECT id_postare, titlu, tags, user_id, linkImg, email, firstName, lastName, P.imagine ,p.createdAt FROM POSTS P, USERS U WHERE U.ID_USER=P.USER_ID'
       )
      posts[0].forEach(element => {
       if(element.imagine)

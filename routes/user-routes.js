@@ -1,3 +1,5 @@
+const sequelize = require('../database/connection')
+
 module.exports=function(app){
     const jwt = require('jsonwebtoken')
     const User = require('../models/user')
@@ -103,8 +105,36 @@ module.exports=function(app){
       res.status(400).json({ status: 'error', err: err })
     }
   })
+
+  app.get('/getusersimple/:id', async (req, res) => {
+    try {
+      const users = await sequelize.query(`SELECT id_user, firstName, lastName, email, role, createdAt from csm_suceava.users where id_user=${req.params.id}`)
+      
+      users.forEach(element => {
+        if(element.imagine)
+        element.imagine=element.imagine.toString('ascii')
+      });
+      if(users[0].imagine){
+      users[0].imagine=users[0].imagine.toString('ascii')}
+      res.status(200).json(users[0])
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
+  app.get('/getuserposts/:id', async (req, res) => {
+    try {
+      const users = await sequelize.query(`SELECT COUNT(*) numar from csm_suceava.users u, csm_suceava.posts p where id_user=${req.params.id} AND user_id=${req.params.id};`)
+      
+     
+      res.status(200).json(users[0][0].numar)
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ status: 'error', err: err })
+    }
+  })
  
-  app.get('/getphoto/:id', async (req, res) => {
+  app.get('/getuserphoto/:id', async (req, res) => {
     try {
       const users = await User.findByPk(req.params.id)
       if(users.imagine){
