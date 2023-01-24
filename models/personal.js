@@ -38,7 +38,7 @@ const  Sequelize =require("sequelize");
       tip_personal:{
         type: Sequelize.STRING(40),
         allowNull:false,
-        validate:{isIn:[["jucator","antrenor"]]}
+        validate:{isIn:[["jucator","antrenor","cadet","speranta","junior"]]}
 
       },
       imagine:{
