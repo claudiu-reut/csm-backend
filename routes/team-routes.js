@@ -1,34 +1,34 @@
-module.exports=function(app){
-    const multer = require('multer')
-    const upload = multer({ storage: multer.memoryStorage() })
-    const Team = require('../models/team')
-    const Match = require('../models/match')
-    const sequelize = require('../database/connection')
-    Team.hasMany(Match, { as: 'matches1', foreignKey: 'id_echipa1' })
-    Team.hasMany(Match, { as: 'matches2', foreignKey: 'id_echipa2' })
-    //add team endpoint
-app.post('/addteam', upload.single('imagine'), async (req, res) => {
+module.exports = function (app) {
+  const multer = require('multer')
+  const upload = multer({ storage: multer.memoryStorage() })
+  const Team = require('../models/team')
+  const Match = require('../models/match')
+  const sequelize = require('../database/connection')
+  Team.hasMany(Match, { as: 'matches1', foreignKey: 'id_echipa1' })
+  Team.hasMany(Match, { as: 'matches2', foreignKey: 'id_echipa2' })
+  //add team endpoint
+  app.post('/addteam', upload.single('imagine'), async (req, res) => {
     try {
-      
-      
       const team = await Team.create({
         tara: req.body.tara,
         oras: req.body.oras,
         nume: req.body.nume,
         imagine: req.file.buffer.toString('base64'),
       })
-  
+
       res.status(200).json({ status: 'ok' })
     } catch (err) {
-      console.log(req.body);
+      console.log(req.body)
       res.status(400).json({ status: 'error', err: err })
     }
   })
-  
+
   //get teams endpoint
   app.get('/getsimpleteams', async (req, res) => {
     try {
-      const teams = await sequelize.query("SELECT id_echipa,nume, oras, tara from csm_suceava.teams")
+      const teams = await sequelize.query(
+        'SELECT id_echipa,nume, oras, tara from csm_suceava.teams'
+      )
       res.status(200).json(teams[0])
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
@@ -47,7 +47,7 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
   app.get('/getteam/:id', async (req, res) => {
     try {
       const team = await Team.findByPk(req.params.id)
-      team.imagine=team.imagine.toString("ascii");
+      team.imagine = team.imagine.toString('ascii')
       res.status(200).json(team)
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
@@ -57,47 +57,44 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
   app.get('/getteamlogo/:id', async (req, res) => {
     try {
       const logo = await Team.findByPk(req.params.id)
-      res.status(200).json(logo.imagine.toString("ascii"))
-      
+      res.status(200).json(logo.imagine.toString('ascii'))
     } catch (err) {
       res.status(400).json({ status: 'error', err: err })
     }
   })
 
-  app.put('/editteam/:id',upload.single('imagine'), async (req, res) => {
+  app.put('/editteam/:id', upload.single('imagine'), async (req, res) => {
     console.log(req.file)
     console.log(req.params.id)
     try {
-        if(req.file){
-      const teams= await Team.update(
-        {
-          nume: req.body.nume,
-          oras: req.body.oras,
-          tara: req.body.tara,
-          imagine: req.file.buffer.toString('base64'),
-        },
-        {
-          where: { id_echipa: req.params.id },
-        }
-    
-      )
-    }else{
-        const teams= await Team.update(
-            {
-              nume: req.body.nume,
-              oras: req.body.oras,
-              tara: req.body.tara,
-            },
-            {
-              where: { id_echipa: req.params.id },
-            }
-        
-          )
-    }
-    
+      if (req.file) {
+        const teams = await Team.update(
+          {
+            nume: req.body.nume,
+            oras: req.body.oras,
+            tara: req.body.tara,
+            imagine: req.file.buffer.toString('base64'),
+          },
+          {
+            where: { id_echipa: req.params.id },
+          }
+        )
+      } else {
+        const teams = await Team.update(
+          {
+            nume: req.body.nume,
+            oras: req.body.oras,
+            tara: req.body.tara,
+          },
+          {
+            where: { id_echipa: req.params.id },
+          }
+        )
+      }
+
       res.status(200).json({ status: 'ok' })
     } catch (err) {
-        console.log(err);
+      console.log(err)
       res.status(400).json({ status: 'error', err: err })
     }
   })
@@ -113,5 +110,4 @@ app.post('/addteam', upload.single('imagine'), async (req, res) => {
       res.status(400).json({ status: 'error', err: err })
     }
   })
-
 }

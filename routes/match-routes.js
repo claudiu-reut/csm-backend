@@ -1,8 +1,8 @@
-module.exports=function(app){
-    const Match = require('../models/match')
-    //add match endpoint
-    const sequelize = require('../database/connection')
-app.post('/addmatch', async (req, res) => {
+module.exports = function (app) {
+  const Match = require('../models/match')
+  //add match endpoint
+  const sequelize = require('../database/connection')
+  app.post('/addmatch', async (req, res) => {
     try {
       console.log(req.body)
       const post = await Match.create({
@@ -17,10 +17,10 @@ app.post('/addmatch', async (req, res) => {
         divizia: req.body.divizia,
         sets: req.body.sets,
       })
-  
+
       res.status(200).json({ status: 'ok' })
     } catch (err) {
-      console.log(err);
+      console.log(err)
       res.status(400).json({ status: 'error', err: err })
     }
   })
@@ -33,7 +33,7 @@ app.post('/addmatch', async (req, res) => {
       res.status(400).json({ status: 'error', err: err })
     }
   })
-  
+
   //get matches with teams logos
   app.get('/getmatchlogos', async (req, res) => {
     console.log('getmatches')
@@ -74,20 +74,19 @@ app.post('/addmatch', async (req, res) => {
   })
   app.put('/editmatch/:id', async (req, res) => {
     console.log(req.body)
-    console.log(req.params.id)
     try {
       const matches = await Match.update(
         {
-            data: req.body.data,
-            campionat: req.body.campionat,
-            rezultat: req.body.rezultat,
-            id_echipa1: req.body.id_echipa1,
-            id_echipa2: req.body.id_echipa2,
-            locatia: req.body.locatia,
-            description: req.body.description,
-            gen: req.body.gen,
-            divizia: req.body.divizia,
-            sets: req.body.sets,
+          data: req.body.data,
+          campionat: req.body.campionat,
+          rezultat: req.body.rezultat,
+          id_echipa1: req.body.id_echipa1,
+          id_echipa2: req.body.id_echipa2,
+          locatia: req.body.locatia,
+          description: req.body.description,
+          gen: req.body.gen,
+          divizia: req.body.divizia,
+          sets: req.body.sets,
         },
         {
           where: { id_meci: req.params.id },
@@ -95,8 +94,8 @@ app.post('/addmatch', async (req, res) => {
       )
       res.status(200).json({ status: 'ok' })
     } catch (err) {
+      console.log(err)
       res.status(400).json({ status: 'error', err: err })
     }
   })
-
 }
