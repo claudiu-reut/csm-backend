@@ -3,19 +3,12 @@ const cors = require('cors')
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
 
-
 //db conn
 require('./database/connection')
-
-
-
 require('./bootstrap')()
 
-
 const Team = require('./models/team')
-
 const Personal = require('./models/personal')
-
 
 Team.hasMany(Personal, { as: 'personal', foreignKey: 'id_echipa' })
 Personal.belongsTo(Team, { as: 'personal', foreignKey: 'id_echipa' })
@@ -78,9 +71,3 @@ router.post('/contact', (req, res) => {
     }
   })
 })
-
-
-
-
-
-

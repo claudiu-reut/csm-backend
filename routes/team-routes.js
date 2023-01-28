@@ -64,8 +64,6 @@ module.exports = function (app) {
   })
 
   app.put('/editteam/:id', upload.single('imagine'), async (req, res) => {
-    console.log(req.file)
-    console.log(req.params.id)
     try {
       if (req.file) {
         const teams = await Team.update(
